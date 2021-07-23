@@ -22,7 +22,7 @@ function broadcastMessageToClients() {
     pureWebSocketServer.broadcastMessageToAllConnectedClients(messageToBroadcast);
 }
 function startingUpSignalingServer(): void {
-    pureWebSocketServer.startUpServer();
+    pureWebSocketServer.startUpServer(6045);
 }
 
 function connectToSignalingServer(): void {

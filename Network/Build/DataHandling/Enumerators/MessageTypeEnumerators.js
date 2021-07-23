@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SERVER_COMMAND_TYPE = exports.MESSAGE_TYPE = void 0;
 var MESSAGE_TYPE;
 (function (MESSAGE_TYPE) {
     MESSAGE_TYPE["UNDEFINED"] = "undefined";
