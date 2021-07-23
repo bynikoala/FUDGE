@@ -1,16 +1,18 @@
-///<reference types="../../node_modules/electron/Electron"/>
+///<reference types="../../node_modules/electron"/>
 
+/**
+ * Main electron application running node. Starts the browser window to contain Fudge and sets up the main menu.
+ * See subfolder Fudge for most of the other functionality
+ */
 namespace Main {
   //#region Types and Data
   enum MENU {
-    QUIT,
-    PROJECT_SAVE,
-    PROJECT_OPEN,
-    VIEW_NODE_OPEN,
-    NODE_DELETE,
-    NODE_UPDATE,
-    DEVTOOLS_OPEN,
-    VIEW_ANIMATION
+    PHYSICS_DEBUG = "physicsDebug",
+    PHYSICS_DEBUG_M1 = "physicsDebug1",
+    PHYSICS_DEBUG_M2 = "physicsDebug2",
+    PHYSICS_DEBUG_M3 = "physicsDebug3",
+    PHYSICS_DEBUG_M4 = "physicsDebug4",
+    PHYSICS_DEBUG_M5 = "physicsDebug5"
   }
 
   const { app, BrowserWindow, Menu, ipcMain } = require("electron");
@@ -20,7 +22,9 @@ namespace Main {
   let defaultHeight: number = 600;
   //#endregion
 
-  //#region Events
+  // app.commandLine.appendSwitch("autoplay-policy", "no-user-gesture-required");
+
+  //#region Events 
   app.addListener("ready", createFudge);
   app.addListener("window-all-closed", function (): void {
     console.log("Quit");
@@ -47,45 +51,59 @@ namespace Main {
 
   function addWindow(_url: string, width: number = defaultWidth, height: number = defaultHeight): Electron.BrowserWindow {
     let window: Electron.BrowserWindow = new BrowserWindow({
-      width: width, height: height, webPreferences: {        // preload: path.join(__dirname, "preload.js"),
-        nodeIntegration: true
+      width: width,
+      height: height,
+      // fullscreen: true,
+      webPreferences: {        // preload: path.join(__dirname, "preload.js"),
+        nodeIntegration: true,
+        enableRemoteModule: true,
+        contextIsolation: false
       }
     });
 
     window.webContents.openDevTools();
     window.loadFile(_url);
-
+    window.maximize();
     return window;
   }
   // #endregion
 
   //#region Menus  
-
   function menuSelect(_item: Electron.MenuItem, _window: Electron.BrowserWindow, _event: Electron.KeyboardEvent): void {
-    console.log(`MenuSelect: Item-id=${MENU[_item.id]}`);
-    switch (Number(_item.id)) {
-      case MENU.PROJECT_OPEN:
-        send(_window, "open", null);
-        break;
-      case MENU.PROJECT_SAVE:
-        send(_window, "save", null);
-        break;
-      case MENU.VIEW_NODE_OPEN:
-        send(_window, "openViewNode", null);
-        break;
-      case MENU.NODE_UPDATE:
-        send(_window, "updateNode", null);
-        break;
-      case MENU.DEVTOOLS_OPEN:
+    console.log(`MenuSelect: Item-id=${Fudge.MENU[_item.id]}`);
+    // TODO: simplify switch by usinge enums as messages
+    switch (_item.id) {
+      case Fudge.MENU.DEVTOOLS_OPEN:
         _window.webContents.openDevTools();
         break;
-      case MENU.VIEW_ANIMATION:
-        send(_window, "openAnimationPanel");
+      case Fudge.MENU.FULLSCREEN:
+        _window.fullScreen = !_window.isFullScreen();
         break;
-      case MENU.QUIT:
+      case Fudge.MENU.QUIT:
         app.quit();
         break;
+
+      //Physics Debug Menu Options | Marko Fehrenbach, HFU 2020  
+      case MENU.PHYSICS_DEBUG:
+        send(_window, "togglePhysicsDebugView");
+        break;
+      case MENU.PHYSICS_DEBUG_M1:
+        send(_window, "PhysicsViewMode_1");
+        break;
+      case MENU.PHYSICS_DEBUG_M2:
+        send(_window, "PhysicsViewMode_2");
+        break;
+      case MENU.PHYSICS_DEBUG_M3:
+        send(_window, "PhysicsViewMode_3");
+        break;
+      case MENU.PHYSICS_DEBUG_M4:
+        send(_window, "PhysicsViewMode_4");
+        break;
+      case MENU.PHYSICS_DEBUG_M5:
+        send(_window, "PhysicsViewMode_5");
+        break;
       default:
+        send(_window, _item.id, null);
         break;
     }
   }
@@ -94,34 +112,38 @@ namespace Main {
     const menu: Electron.MenuItemConstructorOptions[] = [
       {
         label: "Project", submenu: [
-          {
-            label: "Save", id: String(MENU.PROJECT_SAVE), click: menuSelect, accelerator: process.platform == "darwin" ? "Command+S" : "Ctrl+S"
-          },
-          {
-            label: "Open", id: String(MENU.PROJECT_OPEN), click: menuSelect, accelerator: process.platform == "darwin" ? "Command+O" : "Ctrl+O"
-          },
-          {
-            label: "Quit", id: String(MENU.QUIT), click: menuSelect, accelerator: process.platform == "darwin" ? "Command+Q" : "Ctrl+Q"
-          }
+          { label: "Save", id: Fudge.MENU.PROJECT_SAVE, click: menuSelect, accelerator: process.platform == "darwin" ? "Command+S" : "Ctrl+S" },
+          { label: "Open", id: Fudge.MENU.PROJECT_LOAD, click: menuSelect, accelerator: process.platform == "darwin" ? "Command+O" : "Ctrl+O" },
+          { label: "Quit", id: Fudge.MENU.QUIT, click: menuSelect, accelerator: process.platform == "darwin" ? "Command+Q" : "Ctrl+Q" }
         ]
       },
       {
-        label: "View", submenu: [
-          {
-            label: "Node", id: String(MENU.VIEW_NODE_OPEN), click: menuSelect, accelerator: process.platform == "darwin" ? "Command+N" : "Ctrl+N"
-          },
-          {
-            label: "setRoot(testing)", id: String(MENU.NODE_UPDATE), click: menuSelect, accelerator: process.platform == "darwin" ? "Command+U" : "Ctrl+U"
-          },
-          {
-            label: "Animation", id: String(MENU.VIEW_ANIMATION), click: menuSelect, accelerator: process.platform == "darwin" ? "Command+I" : "Ctrl+I"
-          }
+        label: "Edit", submenu: [
+          { label: "Project", id: Fudge.MENU.PANEL_PROJECT_OPEN, click: menuSelect, accelerator: process.platform == "darwin" ? "Command+G" : "Ctrl+P" },
+          { label: "Graph", id: Fudge.MENU.PANEL_GRAPH_OPEN, click: menuSelect, accelerator: process.platform == "darwin" ? "Command+G" : "Ctrl+G" },
+          { label: "Animation", id: Fudge.MENU.PANEL_ANIMATION_OPEN, click: menuSelect, accelerator: process.platform == "darwin" ? "Command+I" : "Ctrl+I" }
         ]
       },
       {
         label: "Debug", submenu: [
+          { label: "DevTool", id: Fudge.MENU.DEVTOOLS_OPEN, click: menuSelect, accelerator: process.platform == "darwin" ? "F12" : "F12" },
+          { label: "Fullscreen", id: Fudge.MENU.FULLSCREEN, click: menuSelect, accelerator: process.platform == "darwin" ? "F11" : "F11" },
+          { type: "separator" },
           {
-            label: "DevTool", id: String(MENU.DEVTOOLS_OPEN), click: menuSelect, accelerator: process.platform == "darwin" ? "F12" : "F12"
+            label: "Physic Debug View", id: String(MENU.PHYSICS_DEBUG), click: menuSelect, accelerator: "CmdOrCtrl+P"
+          }, {
+            label: "Physics Debug Mode", "submenu": [{
+              "label": "Colliders", id: String(MENU.PHYSICS_DEBUG_M1), click: menuSelect
+            }, {
+              "label": "Colliders and Joints (Default)", id: String(MENU.PHYSICS_DEBUG_M2), click: menuSelect
+            }, {
+              "label": "Bounding Boxes", id: String(MENU.PHYSICS_DEBUG_M3), click: menuSelect
+            }, {
+              "label": "Contacts", id: String(MENU.PHYSICS_DEBUG_M4), click: menuSelect
+            },
+            {
+              "label": "Show Physics Objects ONLY", id: String(MENU.PHYSICS_DEBUG_M5), click: menuSelect
+            }]
           }
         ]
       }

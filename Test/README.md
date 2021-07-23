@@ -2,6 +2,8 @@
 - Open the console (F12 or Ctrl+Shift+I), since many test also or solely show output to the console!
 - Testing online on jirkadelloro.github.io/FUDGE only tests the master branch. Test other branches locally using a local server.
 - Use of markdown viewer is recommended when testing locally to use this README.md
+- Here is only a selection of test that are already enhanced with explanation and user guidelines
+- Find more tests in the folder "Miscellaneous"
 
 ## Audio
 - [Audio Graph Insertion](Audio/GraphInsertion/Test.html)  
@@ -11,6 +13,7 @@ Test the handling of the WebAudio context to mix the audiosignals of selected br
 - [SpatialSound](Audio/SpatialSound/Test.html)  
 Complex test for spatial stereo audio. Orbit the camera around the world origin, move an audio source and adjust the panner cones.
 
+<!-- 
 ## Events
 - [EventPassing](Events/EventPassing/Test.html)   
 In der Konsole sollten mehrere Events angezeigt werden und der Fokus soll nach dem Anklicken eines Viewports mit den Pfeiltasten steuerbar sein.
@@ -29,14 +32,15 @@ To be described
 
 ## Rendering
 - [MultiVieportMultiCanvas](WebGL/MultiViewportMultiCanvas/Test.html)  
-  Ein gleiches Objekt soll in 4 verschiedenen Viewports aus 4 Blickrichtungen angezeigt werden.
-
+  Ein gleiches Objekt soll in 4 verschiedenen Viewports aus 4 Blickrichtungen angezeigt werden.  
 - [RectMapping](WebGL/TestRectMapping/Test.html)  
 Die Dimension und Auflösung des Viewport soll auf Änderungen in den Transformationsfeldern auf der rechten Seite reagieren. Entsprechend des Framings, siehe [Framing](../Documentation/Design/Framing.svg)  
 
 ## Resources
-- [NodeResource](Resources/NodeResource/Test.html)   
+- [NodeResource](Transfer/NodeResource/Test.html)   
 Im Viewport sollen viele Pyramiden angezeigt werden, um die ein anderes Objekt kreist.  
+- [ResourceManager](Transfer/ResourceManager/Test.html)   
+Graph und interne Resourcen speichern und zusammen mit externen laden und Graph rekonstruieren  
 
 ## Shading
 - [Light](Shading/Light/Light.html)  
@@ -77,5 +81,9 @@ Hier soll in der Console eine Matrix als Unterpunkt verschiedener Funktionen zu 
 - [Sphere](Mesh/Sphere/Test.html)  
 Hier sollen zwei Kugeln zu sehen sein - eine mit Flat Shading und die andere mit einer Erde-Textur.
 
+- [Torus](Mesh/Torus/Test.html)  
+Hier sollen zwei Tori zu sehen sein - einer mit Flat Shading und der andere mit einer Erde-Textur.
+
 - [HeightMap](Mesh/HeightMap/Test.html)  
 Hier sollen zwei durch eine Sinusfunktion (anhand von X und Z Koordinaten des Grids) generierte Gridmeshes angezeigt werden. Eine mit Flat Shading und eines mit einer Erde-Textur.
+-->

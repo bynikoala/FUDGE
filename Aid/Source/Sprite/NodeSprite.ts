@@ -3,7 +3,7 @@ namespace FudgeAid {
    * Handles the animation cycle of a sprite on a [[Node]]
    */
   export class NodeSprite extends ƒ.Node {
-    private static mesh: ƒ.MeshSprite = new ƒ.MeshSprite();
+    private static mesh: ƒ.MeshSprite = NodeSprite.createInternalResource();
     public framerate: number = 12; // animation frames per second, single frames can be shorter or longer based on their timescale
 
     private cmpMesh: ƒ.ComponentMesh;
@@ -23,6 +23,12 @@ namespace FudgeAid {
       this.addComponent(this.cmpMaterial);
     }
 
+    private static createInternalResource(): ƒ.MeshSprite {
+      let mesh: ƒ.MeshSprite = new ƒ.MeshSprite("Sprite");
+      ƒ.Project.deregister(mesh);
+      return mesh;
+    }
+
     public setAnimation(_animation: SpriteSheetAnimation): void {
       this.animation = _animation;
       if (this.timer)
@@ -35,8 +41,8 @@ namespace FudgeAid {
      */
     public showFrame(_index: number): void {
       let spriteFrame: SpriteFrame = this.animation.frames[_index];
-      this.cmpMesh.pivot = spriteFrame.mtxPivot;
-      this.cmpMaterial.pivot = spriteFrame.mtxTexture;
+      this.cmpMesh.mtxPivot = spriteFrame.mtxPivot;
+      this.cmpMaterial.mtxPivot = spriteFrame.mtxTexture;
       this.cmpMaterial.material.setCoat(this.animation.spritesheet);
       this.frameCurrent = _index;
       this.timer = ƒ.Time.game.setTimer(spriteFrame.timeScale * 1000 / this.framerate, 1, this.showFrameNext);

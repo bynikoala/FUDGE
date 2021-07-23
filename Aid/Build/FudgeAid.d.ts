@@ -3,6 +3,8 @@
 import ƒ = FudgeCore;
 import ƒAid = FudgeAid;
 declare namespace FudgeAid {
+}
+declare namespace FudgeAid {
     /**
      * Abstract class supporting versious arithmetical helper functions
      */
@@ -58,15 +60,14 @@ declare namespace FudgeAid {
         readonly axisRotateX: ƒ.Axis;
         readonly axisRotateY: ƒ.Axis;
         readonly axisDistance: ƒ.Axis;
+        protected translator: ƒ.Node;
+        protected rotatorX: ƒ.Node;
         private maxRotX;
         private minDistance;
         private maxDistance;
-        private rotatorX;
-        private translator;
         constructor(_cmpCamera: ƒ.ComponentCamera, _distanceStart?: number, _maxRotX?: number, _minDistance?: number, _maxDistance?: number);
-        hndAxisOutput: EventListener;
-        get component(): ƒ.ComponentCamera;
-        get node(): ƒ.Node;
+        get cmpCamera(): ƒ.ComponentCamera;
+        get nodeCamera(): ƒ.Node;
         set distance(_distance: number);
         get distance(): number;
         set rotationY(_angle: number);
@@ -75,6 +76,21 @@ declare namespace FudgeAid {
         get rotationX(): number;
         rotateY(_delta: number): void;
         rotateX(_delta: number): void;
+        positionCamera(_posWorld: ƒ.Vector3): void;
+        hndAxisOutput: EventListener;
+    }
+}
+declare namespace FudgeAid {
+    import ƒ = FudgeCore;
+    class CameraOrbitMovingFocus extends CameraOrbit {
+        readonly axisTranslateX: ƒ.Axis;
+        readonly axisTranslateY: ƒ.Axis;
+        readonly axisTranslateZ: ƒ.Axis;
+        constructor(_cmpCamera: ƒ.ComponentCamera, _distanceStart?: number, _maxRotX?: number, _minDistance?: number, _maxDistance?: number);
+        translateX(_delta: number): void;
+        translateY(_delta: number): void;
+        translateZ(_delta: number): void;
+        hndAxisOutput: EventListener;
     }
 }
 declare namespace FudgeAid {
@@ -98,14 +114,17 @@ declare namespace FudgeAid {
         private static count;
         constructor(_name?: string, _transform?: ƒ.Matrix4x4, _material?: ƒ.Material, _mesh?: ƒ.Mesh);
         private static getNextName;
-        get pivot(): ƒ.Matrix4x4;
-        deserialize(_serialization: ƒ.Serialization): ƒ.Serializable;
+        get mtxMeshPivot(): ƒ.Matrix4x4;
+        deserialize(_serialization: ƒ.Serialization): Promise<ƒ.Serializable>;
     }
 }
 declare namespace FudgeAid {
     import ƒ = FudgeCore;
     class NodeArrow extends Node {
+        private static internalResources;
         constructor(_name: string, _color: ƒ.Color);
+        private static createInternalResources;
+        set color(_color: ƒ.Color);
     }
 }
 declare namespace FudgeAid {
@@ -121,10 +140,6 @@ declare namespace FudgeAid {
      * Exept of the node to become the container, all parameters are optional and provided default values for general purpose.
      */
     function addStandardLightComponents(_node: ƒ.Node, _clrAmbient?: ƒ.Color, _clrKey?: ƒ.Color, _clrBack?: ƒ.Color, _posKey?: ƒ.Vector3, _posBack?: ƒ.Vector3): void;
-    /** Three Point Light setup that by default illuminates the Scene from +Z */
-    class NodeThreePointLights extends Node {
-        constructor(_name: string, _rotationY?: number);
-    }
 }
 declare namespace FudgeAid {
     /**
@@ -140,6 +155,7 @@ declare namespace FudgeAid {
         private direction;
         private timer;
         constructor(_name: string);
+        private static createInternalResource;
         setAnimation(_animation: SpriteSheetAnimation): void;
         /**
          * Show a specific frame of the sequence
@@ -191,9 +207,11 @@ declare namespace FudgeAid {
         generate(_rects: ƒ.Rectangle[], _resolutionQuad: number, _origin: ƒ.ORIGIN2D): void;
         /**
          * Add sprite frames using a grid on the spritesheet defined by a rectangle to start with, the number of frames,
-         * the size of the borders of the grid and more
+         * the resolution which determines the size of the sprites mesh based on the number of pixels of the texture frame,
+         * the offset from one cell of the grid to the next in the sequence and, in case the sequence spans over more than one row or column,
+         * the offset to move the start rectangle when the margin of the texture is reached and wrapping occurs.
          */
-        generateByGrid(_startRect: ƒ.Rectangle, _frames: number, _borderSize: ƒ.Vector2, _resolutionQuad: number, _origin: ƒ.ORIGIN2D): void;
+        generateByGrid(_startRect: ƒ.Rectangle, _frames: number, _resolutionQuad: number, _origin: ƒ.ORIGIN2D, _offsetNext: ƒ.Vector2, _offsetWrap?: ƒ.Vector2): void;
         private createFrame;
     }
 }
@@ -202,7 +220,7 @@ declare namespace FudgeAid {
     class ComponentStateMachine<State> extends ƒ.ComponentScript implements StateMachine<State> {
         stateCurrent: State;
         stateNext: State;
-        stateMachine: StateMachineInstructions<State>;
+        instructions: StateMachineInstructions<State>;
         transit(_next: State): void;
         act(): void;
     }
@@ -228,7 +246,7 @@ declare namespace FudgeAid {
     export class StateMachine<State> {
         stateCurrent: State;
         stateNext: State;
-        stateMachine: StateMachineInstructions<State>;
+        instructions: StateMachineInstructions<State>;
         transit(_next: State): void;
         act(): void;
     }
@@ -255,4 +273,10 @@ declare namespace FudgeAid {
         private getStateMethods;
     }
     export {};
+}
+declare namespace FudgeAid {
+    class Viewport {
+        static create(_branch: ƒ.Node): ƒ.Viewport;
+        static expandCameraToInteractiveOrbit(_viewport: ƒ.Viewport, _showFocus?: boolean, _speedCameraRotation?: number, _speedCameraTranslation?: number, _speedCameraDistance?: number): CameraOrbit;
+    }
 }

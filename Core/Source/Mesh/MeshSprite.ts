@@ -11,9 +11,9 @@ namespace FudgeCore {
   export class MeshSprite extends Mesh {
     public static readonly iSubclass: number = Mesh.registerSubclass(MeshSprite);
 
-    public constructor() {
-      super();
-      this.create();
+    public constructor(_name: string = "MeshSprite") {
+      super(_name);
+      // this.create();
     }
 
 

@@ -4,16 +4,17 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Ray | Fudge Core</title>
-	<meta name="description" content="">
+	<meta name="description" content="Documentation for Fudge Core">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
 </head>
 <body>
 <header>
 	<div class="tsd-page-toolbar">
 		<div class="container">
 			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
 					<div class="field">
 						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
 						<input id="tsd-search-field" type="text" />
@@ -40,8 +41,6 @@
 							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
 							<input type="checkbox" id="tsd-filter-externals" checked />
 							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
-							<input type="checkbox" id="tsd-filter-only-exported" />
-							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
 						</div>
 					</div>
 					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
@@ -53,7 +52,7 @@
 		<div class="container">
 			<ul class="tsd-breadcrumb">
 				<li>
-					<a href="../index.html">Globals</a>
+					<a href="../index.html">Fudge Core</a>
 				</li>
 				<li>
 					<a href="../modules/fudgecore.html">FudgeCore</a>
@@ -69,6 +68,18 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Defined by an origin and a direction of type <a href="fudgecore.pick.html">Pick</a>, rays are used to calculate picking an intersections</p>
+					</div>
+					<dl class="tsd-comment-tags">
+						<dt>authors</dt>
+						<dd><p>Jirka Dell&#39;Oro-Friedl, HFU, 2021</p>
+						</dd>
+					</dl>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -100,6 +111,8 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="fudgecore.ray.html#getdistance" class="tsd-kind-icon">get<wbr>Distance</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="fudgecore.ray.html#intersectplane" class="tsd-kind-icon">intersect<wbr>Plane</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="fudgecore.ray.html#tostring" class="tsd-kind-icon">to<wbr>String</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="fudgecore.ray.html#transform" class="tsd-kind-icon">transform</a></li>
 							</ul>
 						</section>
 					</div>
@@ -111,28 +124,28 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Ray<span class="tsd-signature-symbol">(</span>_direction<span class="tsd-signature-symbol">?: </span><a href="fudgecore.vector3.html" class="tsd-signature-type">Vector3</a>, _origin<span class="tsd-signature-symbol">?: </span><a href="fudgecore.vector3.html" class="tsd-signature-type">Vector3</a>, _length<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fudgecore.ray.html" class="tsd-signature-type">Ray</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Ray<span class="tsd-signature-symbol">(</span>_direction<span class="tsd-signature-symbol">?: </span><a href="fudgecore.vector3.html" class="tsd-signature-type" data-tsd-kind="Class">Vector3</a>, _origin<span class="tsd-signature-symbol">?: </span><a href="fudgecore.vector3.html" class="tsd-signature-type" data-tsd-kind="Class">Vector3</a>, _length<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fudgecore.ray.html" class="tsd-signature-type" data-tsd-kind="Class">Ray</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JirkaDellOro/FUDGE/blob/d5630a2d/Core/Source/Ray/Ray.ts#L5">Ray/Ray.ts:5</a></li>
+									<li>Defined in <a href="https://github.com/JirkaDellOro/FUDGE/blob/ee5a3b6f/Core/Source/Ray/Ray.ts#L11">Documents/HFU/FUDGE/Core/Source/Ray/Ray.ts:11</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> _direction: <a href="fudgecore.vector3.html" class="tsd-signature-type">Vector3</a><span class="tsd-signature-symbol"> =&nbsp;Vector3.Z(-1)</span></h5>
+									<h5>_direction: <a href="fudgecore.vector3.html" class="tsd-signature-type" data-tsd-kind="Class">Vector3</a><span class="tsd-signature-symbol"> = ...</span></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> _origin: <a href="fudgecore.vector3.html" class="tsd-signature-type">Vector3</a><span class="tsd-signature-symbol"> =&nbsp;Vector3.ZERO()</span></h5>
+									<h5>_origin: <a href="fudgecore.vector3.html" class="tsd-signature-type" data-tsd-kind="Class">Vector3</a><span class="tsd-signature-symbol"> = ...</span></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> _length: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;1</span></h5>
+									<h5>_length: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 1</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="fudgecore.ray.html" class="tsd-signature-type">Ray</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="fudgecore.ray.html" class="tsd-signature-type" data-tsd-kind="Class">Ray</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -142,10 +155,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="direction" class="tsd-anchor"></a>
 					<h3>direction</h3>
-					<div class="tsd-signature tsd-kind-icon">direction<span class="tsd-signature-symbol">:</span> <a href="fudgecore.vector3.html" class="tsd-signature-type">Vector3</a></div>
+					<div class="tsd-signature tsd-kind-icon">direction<span class="tsd-signature-symbol">:</span> <a href="fudgecore.vector3.html" class="tsd-signature-type" data-tsd-kind="Class">Vector3</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JirkaDellOro/FUDGE/blob/d5630a2d/Core/Source/Ray/Ray.ts#L4">Ray/Ray.ts:4</a></li>
+							<li>Defined in <a href="https://github.com/JirkaDellOro/FUDGE/blob/ee5a3b6f/Core/Source/Ray/Ray.ts#L9">Documents/HFU/FUDGE/Core/Source/Ray/Ray.ts:9</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -155,17 +168,22 @@
 					<div class="tsd-signature tsd-kind-icon">length<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JirkaDellOro/FUDGE/blob/d5630a2d/Core/Source/Ray/Ray.ts#L5">Ray/Ray.ts:5</a></li>
+							<li>Defined in <a href="https://github.com/JirkaDellOro/FUDGE/blob/ee5a3b6f/Core/Source/Ray/Ray.ts#L11">Documents/HFU/FUDGE/Core/Source/Ray/Ray.ts:11</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>TODO: support length</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="origin" class="tsd-anchor"></a>
 					<h3>origin</h3>
-					<div class="tsd-signature tsd-kind-icon">origin<span class="tsd-signature-symbol">:</span> <a href="fudgecore.vector3.html" class="tsd-signature-type">Vector3</a></div>
+					<div class="tsd-signature tsd-kind-icon">origin<span class="tsd-signature-symbol">:</span> <a href="fudgecore.vector3.html" class="tsd-signature-type" data-tsd-kind="Class">Vector3</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JirkaDellOro/FUDGE/blob/d5630a2d/Core/Source/Ray/Ray.ts#L3">Ray/Ray.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/JirkaDellOro/FUDGE/blob/ee5a3b6f/Core/Source/Ray/Ray.ts#L8">Documents/HFU/FUDGE/Core/Source/Ray/Ray.ts:8</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -176,22 +194,28 @@
 					<a name="getdistance" class="tsd-anchor"></a>
 					<h3>get<wbr>Distance</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Distance<span class="tsd-signature-symbol">(</span>_target<span class="tsd-signature-symbol">: </span><a href="fudgecore.vector3.html" class="tsd-signature-type">Vector3</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fudgecore.vector3.html" class="tsd-signature-type">Vector3</a></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Distance<span class="tsd-signature-symbol">(</span>_target<span class="tsd-signature-symbol">: </span><a href="fudgecore.vector3.html" class="tsd-signature-type" data-tsd-kind="Class">Vector3</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fudgecore.vector3.html" class="tsd-signature-type" data-tsd-kind="Class">Vector3</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JirkaDellOro/FUDGE/blob/d5630a2d/Core/Source/Ray/Ray.ts#L25">Ray/Ray.ts:25</a></li>
+									<li>Defined in <a href="https://github.com/JirkaDellOro/FUDGE/blob/ee5a3b6f/Core/Source/Ray/Ray.ts#L35">Documents/HFU/FUDGE/Core/Source/Ray/Ray.ts:35</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns the shortest distance from the ray to the given target point.
+									All values and calculations must be relative to the same coordinate system, preferably the world.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>_target: <a href="fudgecore.vector3.html" class="tsd-signature-type">Vector3</a></h5>
+									<h5>_target: <a href="fudgecore.vector3.html" class="tsd-signature-type" data-tsd-kind="Class">Vector3</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="fudgecore.vector3.html" class="tsd-signature-type">Vector3</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="fudgecore.vector3.html" class="tsd-signature-type" data-tsd-kind="Class">Vector3</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -199,13 +223,13 @@
 					<a name="intersectplane" class="tsd-anchor"></a>
 					<h3>intersect<wbr>Plane</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">intersect<wbr>Plane<span class="tsd-signature-symbol">(</span>_origin<span class="tsd-signature-symbol">: </span><a href="fudgecore.vector3.html" class="tsd-signature-type">Vector3</a>, _normal<span class="tsd-signature-symbol">: </span><a href="fudgecore.vector3.html" class="tsd-signature-type">Vector3</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fudgecore.vector3.html" class="tsd-signature-type">Vector3</a></li>
+						<li class="tsd-signature tsd-kind-icon">intersect<wbr>Plane<span class="tsd-signature-symbol">(</span>_origin<span class="tsd-signature-symbol">: </span><a href="fudgecore.vector3.html" class="tsd-signature-type" data-tsd-kind="Class">Vector3</a>, _normal<span class="tsd-signature-symbol">: </span><a href="fudgecore.vector3.html" class="tsd-signature-type" data-tsd-kind="Class">Vector3</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fudgecore.vector3.html" class="tsd-signature-type" data-tsd-kind="Class">Vector3</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JirkaDellOro/FUDGE/blob/d5630a2d/Core/Source/Ray/Ray.ts#L18">Ray/Ray.ts:18</a></li>
+									<li>Defined in <a href="https://github.com/JirkaDellOro/FUDGE/blob/ee5a3b6f/Core/Source/Ray/Ray.ts#L24">Documents/HFU/FUDGE/Core/Source/Ray/Ray.ts:24</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -218,13 +242,63 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>_origin: <a href="fudgecore.vector3.html" class="tsd-signature-type">Vector3</a></h5>
+									<h5>_origin: <a href="fudgecore.vector3.html" class="tsd-signature-type" data-tsd-kind="Class">Vector3</a></h5>
 								</li>
 								<li>
-									<h5>_normal: <a href="fudgecore.vector3.html" class="tsd-signature-type">Vector3</a></h5>
+									<h5>_normal: <a href="fudgecore.vector3.html" class="tsd-signature-type" data-tsd-kind="Class">Vector3</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="fudgecore.vector3.html" class="tsd-signature-type">Vector3</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="fudgecore.vector3.html" class="tsd-signature-type" data-tsd-kind="Class">Vector3</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="tostring" class="tsd-anchor"></a>
+					<h3>to<wbr>String</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">to<wbr>String<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/JirkaDellOro/FUDGE/blob/ee5a3b6f/Core/Source/Ray/Ray.ts#L56">Documents/HFU/FUDGE/Core/Source/Ray/Ray.ts:56</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns a readable string representation of this ray</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="transform" class="tsd-anchor"></a>
+					<h3>transform</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">transform<span class="tsd-signature-symbol">(</span>_mtxTransform<span class="tsd-signature-symbol">: </span><a href="fudgecore.matrix4x4.html" class="tsd-signature-type" data-tsd-kind="Class">Matrix4x4</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/JirkaDellOro/FUDGE/blob/ee5a3b6f/Core/Source/Ray/Ray.ts#L48">Documents/HFU/FUDGE/Core/Source/Ray/Ray.ts:48</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Transform the ray by the given matrix</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>_mtxTransform: <a href="fudgecore.matrix4x4.html" class="tsd-signature-type" data-tsd-kind="Class">Matrix4x4</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -233,10 +307,10 @@
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
-					<li class="globals  ">
-						<a href="../index.html"><em>Globals</em></a>
+					<li class=" ">
+						<a href="../index.html">Exports</a>
 					</li>
-					<li class="current tsd-kind-module tsd-is-not-exported">
+					<li class="current tsd-kind-namespace">
 						<a href="../modules/fudgecore.html">Fudge<wbr>Core</a>
 					</li>
 				</ul>
@@ -245,7 +319,7 @@
 				<ul class="before-current">
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-class tsd-parent-kind-module">
+					<li class="current tsd-kind-class tsd-parent-kind-namespace">
 						<a href="fudgecore.ray.html" class="tsd-kind-icon">Ray</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
@@ -266,6 +340,12 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="fudgecore.ray.html#intersectplane" class="tsd-kind-icon">intersect<wbr>Plane</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="fudgecore.ray.html#tostring" class="tsd-kind-icon">to<wbr>String</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="fudgecore.ray.html#transform" class="tsd-kind-icon">transform</a>
+							</li>
 						</ul>
 					</li>
 				</ul>
@@ -280,57 +360,9 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
-				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
-				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
-				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
-				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
-				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
-				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
-				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
-				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
-				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
-				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
 				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
 				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
-				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
 			</ul>
 		</div>
 	</div>
@@ -340,6 +372,5 @@
 </div>
 <div class="overlay"></div>
 <script src="../assets/js/main.js"></script>
-<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>

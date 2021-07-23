@@ -1,14 +1,17 @@
 var AnimatorComponentTest;
 (function (AnimatorComponentTest) {
     var ƒ = FudgeCore;
+    var ƒAid = FudgeAid;
     window.addEventListener("DOMContentLoaded", init);
     let node;
-    let startTime = Date.now();
+    let root;
+    let viewport;
     function init() {
-        Scenes.createMiniScene();
-        Scenes.createViewport();
-        Scenes.viewport.draw();
-        node = Scenes.node;
+        root = new ƒ.Node("Root");
+        node = new ƒAid.Node("Test", ƒ.Matrix4x4.IDENTITY(), new ƒ.Material("Uni", ƒ.ShaderUniColor, new ƒ.CoatColored()), new ƒ.MeshCube("Cube"));
+        root.appendChild(node);
+        viewport = ƒAid.Viewport.create(root);
+        viewport.draw();
         initAnim();
     }
     function initAnim() {
@@ -20,9 +23,11 @@ var AnimatorComponentTest;
                 ComponentTransform: [
                     {
                         "ƒ.ComponentTransform": {
-                            rotation: {
-                                x: animseq,
-                                y: animseq
+                            mtxLocal: {
+                                rotation: {
+                                    x: animseq,
+                                    y: animseq
+                                }
                             }
                         }
                     }
@@ -31,16 +36,13 @@ var AnimatorComponentTest;
         };
         let animation = new ƒ.Animation("testAnimation", animStructure, 1);
         animation.labels["test"] = 3000;
-        animation.setEvent("startEvent", 0);
-        animation.setEvent("almostStartEvent", 1);
-        animation.setEvent("middleEvent", 2500);
-        animation.setEvent("almostEndEvent", 4999);
-        animation.setEvent("endEvent", 5000);
+        animation.setEvent("eventStart", 0);
+        animation.setEvent("eventAfterStart", 1);
+        animation.setEvent("eventMiddle", 2500);
+        animation.setEvent("eventBeforeEnd", 4999);
+        animation.setEvent("eventEnd", 5000);
         let cmpAnimation = new ƒ.ComponentAnimator(animation, ƒ.ANIMATION_PLAYMODE.LOOP, ƒ.ANIMATION_PLAYBACK.TIMEBASED_CONTINOUS);
-        // cmpAnimation.speed = 0.1;
-        // node.addComponent(cmpAnimation);
-        // cmpAnimation.speed = 10;
-        // cmpAnimation.jumpTo(animation.labels["test"]);
+        cmpAnimation.speed = 2;
         // #region serialisation
         console.group("before");
         console.log(cmpAnimation);
@@ -48,25 +50,32 @@ var AnimatorComponentTest;
         console.log(ƒ.Serializer.stringify(serialisation));
         console.groupEnd();
         console.group("after");
-        let animFromSeri = new ƒ.ComponentAnimator();
-        animFromSeri.deserialize(serialisation);
-        console.log(animFromSeri);
+        let cmpAnimationReconstructed = new ƒ.ComponentAnimator();
+        cmpAnimationReconstructed.deserialize(serialisation);
+        console.log(cmpAnimationReconstructed);
         console.groupEnd();
-        node.addComponent(animFromSeri);
         // #endregion
-        cmpAnimation.addEventListener("startEvent", hndlEv);
-        cmpAnimation.addEventListener("almostStartEvent", hndlEv);
-        cmpAnimation.addEventListener("middleEvent", hndlEv);
-        cmpAnimation.addEventListener("almostEndEvent", hndlEv);
-        cmpAnimation.addEventListener("endEvent", hndlEv);
+        // override component with reconstruction for testing. Deactivate to test original
+        // cmpAnimation = cmpAnimationReconstructed;
+        cmpAnimation.addEventListener("eventStart", hndlEv);
+        cmpAnimation.addEventListener("eventAfterStart", hndlEv);
+        cmpAnimation.addEventListener("eventMiddle", hndlEv);
+        cmpAnimation.addEventListener("eventBeforeEnd", hndlEv);
+        cmpAnimation.addEventListener("eventEnd", hndlEv);
+        cmpAnimation.playmode = ƒ.ANIMATION_PLAYMODE.REVERSELOOP;
+        node.addComponent(cmpAnimation);
+        cmpAnimation.jumpTo(animation.labels["test"]);
+        cmpAnimation.activate(true);
         ƒ.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, frame);
         ƒ.Loop.start();
+        // let timer: ƒ.Timer = new ƒ.Timer(ƒ.Time.game, 2000, 1, () => node.removeComponent(cmpAnimation));
+        let timer = new ƒ.Timer(ƒ.Time.game, 2000, 1, () => root.removeChild(node));
     }
     function frame() {
-        Scenes.viewport.draw();
+        viewport.draw();
     }
     function hndlEv(_e) {
-        console.log(_e.type /*, (<ƒ.ComponentAnimator>_e.target).getContainer().name*/);
+        console.log(_e.type);
     }
 })(AnimatorComponentTest || (AnimatorComponentTest = {}));
 //# sourceMappingURL=AnimatorComponentTest.js.map

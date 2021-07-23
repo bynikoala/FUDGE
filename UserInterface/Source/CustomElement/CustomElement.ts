@@ -25,15 +25,12 @@ namespace FudgeUserInterface {
     public constructor(_attributes?: CustomElementAttributes) {
       super();
       if (_attributes)
-        for (let name in _attributes)
+        for (let name in _attributes) {
           this.setAttribute(name, _attributes[name]);
-    }
-
-    /**
-     * Return the key (name) of the attribute this element represents
-     */
-    public get key(): string {
-      return this.getAttribute("key");
+          if (name == "key" && !isNaN(Number(_attributes[name])))
+            // if key is a number, as with arrays, prefix with "ƒ", since numbers are not allowed as attributes for querySelector
+            this.setAttribute(name, "ƒ" + _attributes[name]);
+        }
     }
 
     /**
@@ -70,15 +67,31 @@ namespace FudgeUserInterface {
       ƒ.Debug.fudge("Map", _type.constructor.name, _typeCustomElement.constructor.name);
       CustomElement.mapObjectToCustomElement.set(_type, _typeCustomElement);
     }
-    
+
+    /**
+     * Return the key (name) of the attribute this element represents
+     */
+    public get key(): string {
+      return this.getAttribute("key");
+    }
+
     /**
      * Add a label-element as child to this element
      */
     public appendLabel(): HTMLLabelElement {
+      let text: string = this.getAttribute("label");
+      if (!text)
+        return null;
       let label: HTMLLabelElement = document.createElement("label");
-      label.textContent = this.getAttribute("label");
+      label.textContent = text;
       this.appendChild(label);
       return label;
+    }
+
+    public setLabel(_label: string): void {
+      let label: HTMLLabelElement = this.querySelector("label");
+      if (label)
+        label.textContent = _label;
     }
 
     /**
@@ -89,6 +102,20 @@ namespace FudgeUserInterface {
     /**
      * Set the value of this element using a format compatible with [[FudgeCore.Mutator]]
      */
-    public abstract setMutatorValue(_value: Object): void;
+    public setMutatorValue(_value: Object): void {
+      Reflect.set(this, "value", _value);
+    }
+
+    /** Workaround reconnection of clone */
+    public cloneNode(_deep: boolean): Node {
+      let label: string = this.getAttribute("label");
+      //@ts-ignore
+      let clone: CustomElement = new this.constructor(label ? { label: label } : null);
+      document.body.appendChild(clone);
+      clone.setMutatorValue(this.getMutatorValue());
+      for (let attribute of this.attributes)
+        clone.setAttribute(attribute.name, attribute.value);
+      return clone;
+    }
   }
 }

@@ -10,7 +10,7 @@ To get started with FUDGE, please browse through the [Wiki](https://github.com/J
 ## Core
 Contains the core functionality of FUDGE needed to create games. For many games it's sufficient to work only with this module.
 ## UserInterface
-Comtains the classes for easy and even automatic creation of graphical interfaces using the mutator concept (see Wiki). This module is heavily used in the editor and can be used and extended for games.
+Contains the classes for easy and even automatic creation of graphical interfaces using the mutator concept (see Wiki). This module is heavily used in the editor and can be used and extended for games.
 ## Network
 Contains components for gaming over networks. This module is not fully evaluated yet.
 ## Aid
@@ -32,19 +32,18 @@ A collection of various other helpful documents and resources
 # Call for papers
 - :pencil: Modeller
 - :pencil: Cameratransformation, Axonometry and VR
+- :pencil: Diegetic User-Interface
+- :pencil: Redesign Golden Layout
+- :pencil: Input-Manager
 - Shader
+- Grapheditor/Wiring for Shader and Animation
+- Light and Shadow
 - Primitve 3D-Models and 2D-Shapes 
 - Importer for standard file formats
-- Light and Shadow
-- Diegetic User-Interface
 - Runtime-Recording for Replay
-- Grapheditor/Wiring for Shader and Animation
-- Input-Manager
+- Undo/Rollback
 - Selection-Sets to store temporary Groups
 - Advanced texturing
-- :pencil: Physikengine (Marko Fehrenbach)
-- :pencil: Partikelsysteme (Jonas Plotzky)
-- ~~Spritesheet~~
 
 # Contributors  
 
@@ -59,4 +58,6 @@ A collection of various other helpful documents and resources
 | Monika Galkewitsch | UI-Components                     |
 | Lea Stegk          | UI-Design                         |
 | Elke Scherffius    | Tutorials                         |
+| Marko Fehrenbach   | Physics                         |
+| Jonas Plotzky      | Particlesystem                         |
 

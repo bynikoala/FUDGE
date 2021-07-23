@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.UiElementHandler = void 0;
 class UiElementHandler {
     static getFundamentalDOMElements() {
         UiElementHandler.electronWindow = document;

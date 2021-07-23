@@ -7,7 +7,7 @@ namespace FudgeCore {
   export class MeshSphere extends Mesh {
     public static readonly iSubclass: number = Mesh.registerSubclass(MeshSphere);
 
-    public normals: Float32Array;
+    protected ƒnormals: Float32Array;
 
     private sectors: number;
     private stacks: number;
@@ -17,12 +17,17 @@ namespace FudgeCore {
     // private textureUVs: Array<number> = [];
     // public textureUVs: Float32Array;
 
-    public constructor(_sectors: number = 12, _stacks: number = 8) {
-      super();
+    public constructor(_name: string = "MeshSphere", _sectors: number = 8, _stacks: number = 8) {
+      super(_name);
 
+      this.create(_sectors, _stacks);
+    }
+
+    public create(_sectors: number = 3, _stacks: number = 2): void {
+      this.clear();
       //Clamp resolution to prevent performance issues
-      this.sectors = Math.min(_sectors, 128);
-      this.stacks = Math.min(_stacks, 128);
+      this.sectors = Math.min(Math.round(_sectors), 128);
+      this.stacks = Math.min(Math.round(_stacks), 128);
 
       if (_sectors < 3 || _stacks < 2) {
         Debug.warn("UV Sphere must have at least 3 sectors and 2 stacks to form a 3-dimensional shape.");
@@ -30,10 +35,6 @@ namespace FudgeCore {
         this.stacks = Math.max(2, _stacks);
       }
 
-      this.create();
-    }
-
-    public create(): void {
       let vertices: Array<number> = [];
       let normals: number[] = [];
       let textureUVs: number[] = [];
@@ -79,13 +80,32 @@ namespace FudgeCore {
       // scale down
       vertices = vertices.map(_value => _value / 2);
 
-      this.textureUVs = new Float32Array(textureUVs);
-      this.normals = new Float32Array(normals);
-      this.vertices = new Float32Array(vertices);
-      this.normalsFace = this.createFaceNormals();
-      this.indices = this.createIndices();
-      this.createRenderBuffers();
+      this.ƒtextureUVs = new Float32Array(textureUVs);
+      this.ƒnormals = new Float32Array(normals);
+      this.ƒvertices = new Float32Array(vertices);
+      this.ƒnormalsFace = this.createFaceNormals();
+      this.ƒindices = this.createIndices();
+      // this.createRenderBuffers();
     }
+
+    //#region Transfer
+    public serialize(): Serialization {
+      let serialization: Serialization = super.serialize();
+      serialization.sectors = this.sectors;
+      serialization.stacks = this.stacks;
+      return serialization;
+    }
+    public async deserialize(_serialization: Serialization): Promise<Serializable> {
+      super.deserialize(_serialization);
+      this.create(_serialization.sectors, _serialization.stacks);
+      return this;
+    }
+
+    public async mutate(_mutator: Mutator): Promise<void> {
+      super.mutate(_mutator);
+      this.create(_mutator.sectors, _mutator.stacks);
+    }
+    //#endregion
 
     protected createIndices(): Uint16Array {
       let inds: Array<number> = [];
@@ -116,19 +136,6 @@ namespace FudgeCore {
       }
       let indices: Uint16Array = new Uint16Array(inds);
       return indices;
-    }
-
-    protected createVertices(): Float32Array {
-      return this.vertices;
-    }
-
-    protected createTextureUVs(): Float32Array {
-      return this.textureUVs;
-    }
-
-    //TODO: we also need REAL face normals
-    protected createFaceNormals(): Float32Array {
-      return this.normals;
     }
   }
 }
